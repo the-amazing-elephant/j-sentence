@@ -9,6 +9,7 @@ cd j-sentence
 virtualenv -p python3.6 www
 cd www
 source ./bin/activate
-pip install - requirements.txt
+pip install -r requirements.txt
 python3 server.py
 ```
+Open localhost:8000 in your browser.

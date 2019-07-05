@@ -3,6 +3,15 @@ A lightweight Japanese-English sentence randomizer with a simple filter for sent
 
 ## To run on your local server
 
+
+### Using Docker
+```bash
+docker pull wireman27/j-sentence
+docker run -d -p 8000:8000 wireman27/j-sentence
+```
+Open 0.0.0.0:8000 in your browser.
+
+### Manually
 ```bash
 git clone https://github.com/the-amazing-elephant/j-sentence.git
 cd j-sentence

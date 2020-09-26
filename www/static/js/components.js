@@ -11,7 +11,11 @@ const sentences = [
 class Lang extends React.Component {
 	render() {
 		return (
-			<p className='langP' lang={this.props.lang == 'j' ? 'ja-jp' : 'en-us'}>{lang[this.props.lang]}</p>
+			<p 
+				className='langP' 
+				lang={this.props.lang == 'j' ? 'ja-jp' : 'en-us'}
+			>{lang[this.props.lang]}
+			</p>
 		)
 	}
 };
@@ -29,6 +33,7 @@ class SentenceApp extends React.Component {
 		this.handleComplexityChange = this.handleComplexityChange.bind(this)
 		this.handleRevealChange = this.handleRevealChange.bind(this)
 		this.returnRandomSentence = this.returnRandomSentence.bind(this)
+		this.handleKeyDown = this.handleKeyDown.bind(this);
 	}
 
 	handleLangChange() {
@@ -44,7 +49,16 @@ class SentenceApp extends React.Component {
 		if(oldState) {this.setState({reveal:false})} else {this.setState({reveal:true})}
 	}
 
+	handleKeyDown(e) {
+		if (e.code === 'Enter') {
+			this.returnRandomSentence(this.state.comp);
+		} else if (e.code === 'Space') {
+			this.handleRevealChange(this.state.reveal);
+		}
+	}
+
 	componentDidMount() {
+		document.addEventListener("keydown", this.handleKeyDown);
 		this.returnRandomSentence(this.state.comp)
 	}
 
@@ -75,6 +89,16 @@ class SentenceApp extends React.Component {
 			</div>
 		)
 	}
+}
+
+class Input extends React.Component {
+
+
+
+	render() {
+		return <input type="text" onKeyDown={this._handleKeyDown} />
+	}
+
 }
 
 class SourceLang extends React.Component {
@@ -126,7 +150,6 @@ class SentenceBox extends React.Component {
 	render() {
 		var isReveal = this.props.reveal
 		var tl = (this.props.sl == 'e') ? 'j' : 'e'
-		console.log(this.props.sp[this.props.sl])
 		return (
 			<div id='sentDiv'>
 				<Sentence sent={this.props.sp[this.props.sl]} />

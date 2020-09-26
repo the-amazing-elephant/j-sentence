@@ -26,12 +26,17 @@ def front_page():
 def get_sentence_pair():
 	comp = request.args.get('comp')
 	comp = int(comp)
-	s = select([SentencePair]).order_by(func.random()).where(SentencePair.eng_compx>comp).limit(1)
+
+	s = select([SentencePair])\
+		.order_by(func.random())\
+		.where(SentencePair.eng_compx>comp)\
+		.limit(1)
+
 	result = db.engine.execute(s)
-	for row in result:
-		eng_sent = row.eng_sent
-		jpn_sent = row.jpn_sent
-		return json.dumps({'e':eng_sent,'j':jpn_sent})
+	rows = [row for row in result]
+	eng_sent = rows[0].eng_sent
+	jpn_sent = rows[0].jpn_sent
+	return json.dumps({'e':eng_sent,'j':jpn_sent})
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=8000, debug=True)
